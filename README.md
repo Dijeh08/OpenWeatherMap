@@ -1,0 +1,1 @@
+This is a weather lookup app that allow users to search for cities and see real-time temperature, humidity, wind speed and cloud-cover of the specified city. The app also shows 5day forcast in interval of 3 hours.
