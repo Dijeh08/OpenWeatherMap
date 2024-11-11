@@ -4,6 +4,10 @@ import WaterDropIcon from '@mui/icons-material/WaterDrop';
 import AirIcon from '@mui/icons-material/Air';
 import SpeedIcon from '@mui/icons-material/Speed';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import {dirname} from 'path';
+import {fileURLToPath} from 'url';
+
+const _dirname = dirname(fileURLToPath(import.meta.url));
 
 
 function CurrentForcast(props) {
@@ -20,7 +24,7 @@ function CurrentForcast(props) {
               
                 <div className="rounded col-4 border border-warning-emphasis  shadow ms-0">
                     <div className="mt-2">
-                        <div className="text-center pt-2">{props.data ? <img src={`/images/big/${props.data.weather[0].icon}.png`} alt={`${formattedWeatherDescription}`}/>: <img src="/images/big/1.png" alt="No weather Icon"/>}</div>
+                        <div className="text-center pt-2">{props.data ? <img src={`public/images/big/${props.data.weather[0].icon}.png`} alt={`${formattedWeatherDescription}`}/>: <img src="/images/big/1.png" alt="No weather Icon"/>}</div>
                         <div><h1 className="text-center">{props.data? props.data.main.temp: 0} <sup>o</sup>C</h1></div>
                         <div className="d-flex justify-content-center my-1">
                             <div><i className="bi bi-geo-alt"></i></div>
