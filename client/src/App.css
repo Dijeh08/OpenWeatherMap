@@ -1,0 +1,14 @@
+.whiteBackground{
+  background-color: aliceblue;
+  color: red;
+  /* border-radius: 2%; */
+  /* overflow-x: auto;
+  flex-wrap: nowrap; */
+}
+.blackBackground{
+  background-color: black;
+  color: white;
+  /* border-radius: 2%; */
+  /* overflow-x: auto;
+  flex-wrap: nowrap; */
+}
