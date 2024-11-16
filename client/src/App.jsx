@@ -125,15 +125,14 @@ useEffect(() =>{
             country={country}
             input={input}/>
       </div>
+      {weather3HrsData.length > 0 &&
       <div className={backgroundColor? 'whiteBackground container ': 'blackBackground container'}>
         <div className='text-center'><h3>5 Day/ 3 HOUR FORCAST</h3></div>
         <div className='overflow-x-scroll d-flex'>
           {weather3HrsData.map(CreateWeatherCard)}
-        </div>
-        
-        
+        </div> 
       </div>
-
+      }
       <Footer/>
 
     </>
