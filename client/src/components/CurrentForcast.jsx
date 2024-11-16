@@ -5,11 +5,7 @@ import AirIcon from '@mui/icons-material/Air';
 import SpeedIcon from '@mui/icons-material/Speed';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Image1 from '../assets/images/1.png';
-// import { getImageURL } from "../utils/image-util";
-import {dirname} from 'path';
-import {fileURLToPath} from 'url';
 
-const _dirname = dirname(fileURLToPath(import.meta.url));
 
 
 function CurrentForcast(props) {
