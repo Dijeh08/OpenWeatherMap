@@ -6,6 +6,11 @@ import SpeedIcon from '@mui/icons-material/Speed';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Image1 from '../assets/images/1.png';
 // import { getImageURL } from "../utils/image-util";
+import {dirname} from 'path';
+import {fileURLToPath} from 'url';
+
+const _dirname = dirname(fileURLToPath(import.meta.url));
+
 
 function CurrentForcast(props) {
     // console.log(props.data)
@@ -14,11 +19,6 @@ function CurrentForcast(props) {
     const formattedWeatherDescription = `${formatedFirstLetter}${restOfTheLetters}`;
 
     const d = new Date()
-
-    // function handleImage(params) {
-    //         const image = `../assets/images/big/${params}.png`
-        
-    // }
 
     function getImageURL(name) {
         return new URL(`../assets/images/${name}.png`, import.meta.url).href
