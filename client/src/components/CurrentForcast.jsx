@@ -4,7 +4,8 @@ import WaterDropIcon from '@mui/icons-material/WaterDrop';
 import AirIcon from '@mui/icons-material/Air';
 import SpeedIcon from '@mui/icons-material/Speed';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-
+import Image1 from '../assets/images/1.png';
+// import { getImageURL } from "../utils/image-util";
 
 function CurrentForcast(props) {
     // console.log(props.data)
@@ -13,6 +14,15 @@ function CurrentForcast(props) {
     const formattedWeatherDescription = `${formatedFirstLetter}${restOfTheLetters}`;
 
     const d = new Date()
+
+    // function handleImage(params) {
+    //         const image = `../assets/images/big/${params}.png`
+        
+    // }
+
+    function getImageURL(name) {
+        return new URL(`../assets/images/${name}.png`, import.meta.url).href
+    }
     
     return(
         <>
@@ -20,7 +30,8 @@ function CurrentForcast(props) {
               
                 <div className="rounded col-4 border border-warning-emphasis  shadow ms-0">
                     <div className="mt-2">
-                        <div className="text-center pt-2">{props.data ? <img src={`/images/big/${props.data.weather[0].icon}.png`} alt={`${formattedWeatherDescription}`}/>: <img src="/images/big/1.png" alt="No weather Icon"/>}</div>
+                        <div className="text-center pt-2">{props.data ? <img src={ getImageURL(props.data.weather[0].icon)} alt={`${formattedWeatherDescription}`}/>: <img src={Image1} alt="No weather Icon"/>}</div>
+                        
                         <div><h1 className="text-center">{props.data? props.data.main.temp: 0} <sup>o</sup>C</h1></div>
                         <div className="d-flex justify-content-center my-1">
                             <div><i className="bi bi-geo-alt"></i></div>
@@ -71,7 +82,7 @@ function CurrentForcast(props) {
                      
                         <div className="col-12 m-1 p-0">
                             <div className="text-center">
-                                <i class="bi bi-cloud-sun-fill"></i>
+                                <i className="bi bi-cloud-sun-fill"></i>
                                 
                                 <h4>{props.data? props.data.clouds.all: 0} %</h4>
                             </div>

@@ -22,12 +22,15 @@ function HourlyForcast(props) {
     const formatedFirstLetter = props.data && (props.data.weather[0].description).charAt(0).toUpperCase();
     const restOfTheLetters = props.data && (props.data.weather[0].description).slice(1).toLowerCase();
     const formattedWeatherDescription = `${formatedFirstLetter}${restOfTheLetters}`;
-    
+
+    function getImageURL(name) {
+        return new URL(`../assets/images/${name}.png`, import.meta.url).href
+    }
     return(
         <>
             <div className='border  rounded my-1 col-2 mx-2'>
                 <div className='text-center mt-0'><p>{props.data? formattedTime[1] : '00:00'}</p></div>
-                <div className='text-center mt-0'>{props.data? <img src={`/images/big/${props.data.weather[0].icon}.png`} alt={`${formattedWeatherDescription}`}/>: null}</div>
+                <div className='text-center mt-0'>{props.data? <img src={getImageURL(props.data.weather[0].icon)} alt={`${formattedWeatherDescription}`}/>: null}</div>
                 <div className='text-center mt-0'><p>{props.data? props.data.main.temp: 0}<sup>o</sup>C</p></div>
                 <div className='text-center mt-0'><p><AirIcon/>{props.data? props.data.wind.speed: 0} mph</p></div>
                 

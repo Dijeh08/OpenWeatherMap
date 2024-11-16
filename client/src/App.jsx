@@ -5,6 +5,7 @@ import axios from 'axios';
 import CurrentForcast from './components/CurrentForcast';
 import HourlyForcast from './components/HourlyForcast';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import Footer from './components/footer';
 
 function App() {
   const [latitude, setLatitude] = useState(0);
@@ -19,11 +20,10 @@ function App() {
   const [isThereLongitudeAndLatitudeData, setThereLongitudeAndLatitudeData] = useState(false)
   const controller = new AbortController();
   const signal = controller.signal;
-
+  
 
   function handleBackgroundColor() {
-    // console.log(backgroundColor)
-  
+   
     setBackgroundColor(!backgroundColor)
   }
 
@@ -134,7 +134,7 @@ useEffect(() =>{
         
       </div>
 
-      
+      <Footer/>
 
     </>
   )
