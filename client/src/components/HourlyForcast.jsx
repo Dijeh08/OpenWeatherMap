@@ -28,13 +28,13 @@ function HourlyForcast(props) {
     }
     return(
         <>
-            <div className='border  rounded my-1 col-2 mx-2'>
+            <div className='border  rounded my-1 col-xm-3 col-md-auto mx-2'>
                 <div className='text-center mt-0'><p>{props.data? formattedTime[1] : '00:00'}</p></div>
-                <div className='text-center mt-0'>{props.data? <img src={getImageURL(props.data.weather[0].icon)} alt={`${formattedWeatherDescription}`}/>: null}</div>
+                <div className='text-center mt-0'>{props.data? <img src={getImageURL(props.data.weather[0].icon)} alt={`${formattedWeatherDescription}`} className='w-100'/>: null}</div>
                 <div className='text-center mt-0'><p>{props.data? props.data.main.temp: 0}<sup>o</sup>C</p></div>
                 <div className='text-center mt-0'><p><AirIcon/>{props.data? props.data.wind.speed: 0} mph</p></div>
                 
-                <div className='text-center mt-0 bg-primary'><h5>{props.data?  formattedWeatherDescription: 'Description'}</h5></div>
+                <div className='text-center mt-0 bg-primary w-100'><h5 className='w-100'>{props.data?  formattedWeatherDescription: 'Description'}</h5></div>
     
             </div>
         </>

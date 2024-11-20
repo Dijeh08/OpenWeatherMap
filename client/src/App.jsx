@@ -8,95 +8,79 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import Footer from './components/footer';
 
 function App() {
-  const [latitude, setLatitude] = useState(0);
-  const [longitude, setLongitude] = useState(0);
-  const [backgroundColor, setBackgroundColor] = useState(false);
-  const [state, setState] = useState(null);
+  
+  const [darkMode, setDarkMode] = useState(true);
   const [country, setCountry] = useState(null);
+  const [state, setState] = useState(null)
   const [input, setInput] = useState(null);
-  // const [apiState, setApiState] = useState(false)
   const [weatherData, setWeatherData] = useState(null);
   const [weather3HrsData, setWeather3HrsData] = useState([]);
-  const [isThereLongitudeAndLatitudeData, setThereLongitudeAndLatitudeData] = useState(false)
   const controller = new AbortController();
   const signal = controller.signal;
-  
+  // const [searchButtonClicked, setSearchButtonClicked] = useState(false);
+  const htmlElement = document.querySelector('html');
+                      htmlElement.setAttribute('data-bs-theme', darkMode? 'dark':'light');
+  const openWeatherMap_key = import.meta.env.VITE_SECRET_KEY;
 
-  function handleBackgroundColor() {
+  function hangleModeClick(mode) {
    
-    setBackgroundColor(!backgroundColor)
-  }
-
-  function handleLatitude(params) {
-    // console.log(`Thats is the lat ${params}`)
-    setLatitude(params);
-  }
-
-  function handleLongitude(params) {
-    // console.log(`Thats is the lon ${params}`)
-    setLongitude(params);
-    setThereLongitudeAndLatitudeData(true)
-  }
-
-  useEffect(() => {
-  
-        // console.log('me')
-        const fetchAPI = async (req, res) =>{
-          try {
-            const response = await axios ({
-              method: 'GET',
-              url: `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${import.meta.env.VITE_SECRET_KEY}`,
-            }, {signal});
-            
-          // console.log(response.data);
-          setWeatherData(response.data)
-          } catch (error) {
-            console.log(error)
-          } 
-        }
-
-    fetchAPI();
-  }, [ isThereLongitudeAndLatitudeData]);
-
-  function handleState(state) {
-    // console.log(state);
-    setState(state);
-  }
-
-  function handleCountry(state) {
-    // console.log(state);
-    setCountry(state);
+    setDarkMode(mode)
+    // console.log(mode)
   }
 
   function handleInputValue(state) {
-    // console.log(state);
     setInput(state);
   }
 
-  async function handle3HrAPICall (params) {
+  async function APIcall(params) {
     try {
-       
-        const response = await axios({
-            method: "GET",
-            url: `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&appid=${import.meta.env.VITE_SECRET_KEY}`
-        },{signal});
+      const locationResponse = await axios({
+        method: 'GET',
+        url: `http://api.openweathermap.org/geo/1.0/direct?q=${input}&limit=5&appid=${openWeatherMap_key}`,
+      });
+      
+      const latitude = locationResponse.data[0].lat;
+      const longitude = locationResponse.data[0].lon;
+      const state = locationResponse.data[0].state;
+      const country = locationResponse.data[0].country;
+      setState(state)
+      const result = await axios ({
+          
+                method: 'POST',
+                url: 'http://localhost:3001/filter',
+                data: ({
+                    country: country
+                })
+            });
+    // console.log(latitude, longitude, state, country, result.data);
+    setCountry(result.data);
+    const currentWeatherResponse = await axios ({
+      method: 'GET',
+      url: `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${openWeatherMap_key}`,
+    }, {signal});
+  // console.log(latitude, longitude)
+  // console.log(currentWeatherResponse.data);
+  setWeatherData(currentWeatherResponse.data)
+    
 
-        // console.log(response.data.list);
-        
-        setWeather3HrsData(response.data.list)
-    } catch (error) {
-        console.log(error)
-    }
-     
+  const forcast = await axios({
+      method: "GET",
+      url: `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&appid=${openWeatherMap_key}`
+    },{signal});
+
+  // console.log(forcast.data.list);
+  
+  setWeather3HrsData(forcast.data.list)
+} catch (error) {
+  console.error('Error sending data:', error);
 }
-useEffect(() =>{
-  handle3HrAPICall();
-  return(() => {
-    controller.abort();
-    console.log(controller.signal)
-  })
-},[])
+  }
 
+  async function handleSearchButtonClicked(params) {
+    // setSearchButtonClicked(params)
+    console.log(params)
+    APIcall();
+  }
   
   function CreateWeatherCard(params) {
     // console.log(params)
@@ -108,26 +92,24 @@ useEffect(() =>{
   return(
     <>
     
-      <div className={backgroundColor? 'whiteBackground': 'blackBackground'}>
+      <div className='bg-success'>
           <Header 
-          background={handleBackgroundColor}
-          long={handleLongitude}
-          latt={handleLatitude}
-          state={handleState}
-          country={handleCountry}
-          inputValue={handleInputValue}/>
+          darkMode={hangleModeClick}
+          inputValue={handleInputValue}
+          searchButtonClicked={handleSearchButtonClicked}/>
       </div>
       
-      <div className={backgroundColor? 'whiteBackground container': 'blackBackground container'} style={{marginTop: '5px'}}>
+      <div className='' style={{marginTop: '5px'}}>
           <CurrentForcast
             data={weatherData}
             state={state}
             country={country}
             input={input}/>
       </div>
+
       {weather3HrsData.length > 0 &&
-      <div className={backgroundColor? 'whiteBackground container ': 'blackBackground container'}>
-        <div className='text-center'><h3>5 Day/ 3 HOUR FORCAST</h3></div>
+      <div className=''>
+        <div className='text-center bg-success p-2 mt-1'><h3>5 Day/ 3 HOUR FORCAST</h3></div>
         <div className='overflow-x-scroll d-flex'>
           {weather3HrsData.map(CreateWeatherCard)}
         </div> 
