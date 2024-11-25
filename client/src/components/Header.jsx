@@ -36,7 +36,7 @@ const Header = (props) => {
                 </div>
                 <div className='d-flex justify-content-between'>
                     <div className='mx-2'>
-                        <form onClick={handleSubmit}>
+                        <form >
                             
                             <div className="input-group col">
                              
@@ -50,7 +50,7 @@ const Header = (props) => {
                                     aria-describedby="basic-addon1" 
                                     required/>
                                 
-                                <button type="submit"  className="btn btn-primary"><i className="bi bi-search"></i></button>
+                                <button type="submit" onClick={handleSubmit} className="btn btn-primary"><i className="bi bi-search"></i></button>
                             </div>
                         
                                           

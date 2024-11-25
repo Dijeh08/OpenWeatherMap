@@ -21,6 +21,7 @@ function App() {
   const htmlElement = document.querySelector('html');
                       htmlElement.setAttribute('data-bs-theme', darkMode? 'dark':'light');
   const openWeatherMap_key = import.meta.env.VITE_SECRET_KEY;
+  const positionStack_key = import.meta.env.VITE_POSITIONSTACK_KEY;
 
  
   function hangleModeClick(mode) {
@@ -32,25 +33,27 @@ function App() {
   }
 
   async function APIcall(params) {
+
     try {
       const locationResponse = await axios({
         method: 'GET',
-        url: `http://api.openweathermap.org/geo/1.0/direct?q=${input}&limit=5&appid=${openWeatherMap_key}`,
+        url: `https://api.positionstack.com/v1/forward?access_key=${positionStack_key}&query=${input}`,
+        //  `https://api.openweathermap.org/geo/1.0/direct?q=${input}&limit=5&appid=${openWeatherMap_key}`,
       });
+      console.log(locationResponse.data.data[0])
+      // const latitude = locationResponse.data[0].latitude;
+      // const longitude = locationResponse.data[0].longitude;
+      const {region, country, latitude, longitude} = locationResponse.data.data[0];
+      setState(region);
+      console.log(region, country, latitude, longitude)
+      // const result = (countryNames.filter(particularCountry => particularCountry.Code === country))[0].Name;
       
-      const latitude = locationResponse.data[0].lat;
-      const longitude = locationResponse.data[0].lon;
-      const {state, country} = locationResponse.data[0];
-      setState(state);
-
-      const result = (countryNames.filter(particularCountry => particularCountry.Code === country))[0].Name;
-      
-    setCountry(result);
+    setCountry(country);
     const currentWeatherResponse = await axios ({
       method: 'GET',
       url: `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${openWeatherMap_key}`,
     }, {signal});
-  
+  console.log(currentWeatherResponse.data)
   setWeatherData(currentWeatherResponse.data)
     
 
@@ -60,6 +63,7 @@ function App() {
     },{signal});
   
   setWeather3HrsData(forcast.data.list)
+  console.log(forcast.data.list)
 } catch (error) {
   console.error('Error sending data:', error);
 }
@@ -71,11 +75,12 @@ function App() {
     APIcall();
   }
   
-  function CreateWeatherCard(params) {
+  function CreateWeatherCard(params, index) {
    
     return(
       <HourlyForcast 
-        data={params}/>
+        data={params}
+        key={index}/>
     )
   }
   return(
