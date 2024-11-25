@@ -17,12 +17,8 @@ const countryNames =[{"Name":"Afghanistan","Code":"AF"},{"Name":"Albania","Code"
 
 app.post('/filter', (req, res) => {
     const {country} = req.body;
-    console.log(country)
-    // const capitalizeCountryFirstLetter = country.charAt(0).toUpperCase()
-    // const lowerCaseRestLetters = (country.slice(1)).toLowerCase()
-    // const formattedCountryName = `${capitalizeCountryFirstLetter}${lowerCaseRestLetters}`
-    // console.log(formattedCountryName); // Format the country Name
-
+    console.log(country);
+    
     // Filtering country code
     const filteredCountryData = countryNames.filter(particularCountry => particularCountry.Code === country);
     const countryName = filteredCountryData[0].Name // Nigeria
