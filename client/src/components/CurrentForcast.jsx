@@ -1,4 +1,3 @@
-import axios from "axios";
 import React from "react";
 import WaterDropIcon from '@mui/icons-material/WaterDrop';
 import AirIcon from '@mui/icons-material/Air';
@@ -36,15 +35,14 @@ function CurrentForcast(props) {
                             <div className="text-center">
                                 <div className="d-flex justify-content-center">
                                     <i className="bi bi-geo-alt"></i> 
-                                    <h6>{props.data && props.state }, {props.data && props.country}.</h6>
+                                    <h5>{props.data && props.state }, {props.data && props.country}.</h5>
                                 </div>
+                                
                             </div>}
                                 
-                                
-                            
                             <div className="d-flex justify-content-between mx-3">
-                                <div><p>{d.toDateString()}</p></div>
-                                <div><p>{d.toLocaleTimeString()}</p></div>
+                                <div><p className="fw-normal">{d.toDateString()}</p></div>
+                                <div><p className="fw-normal">{d.toLocaleTimeString()}</p></div>
                             </div>
                         </div>
                         <div><h4 className="text-center">Feels like {props.data? props.data.main.feels_like: 0} <sup>o</sup>C</h4></div>
@@ -54,7 +52,6 @@ function CurrentForcast(props) {
                     
                 </div>
                 <div className=" col-sm-12 col-md-8 rounded shadow border border-warning-emphasis"> 
-                    {/* <div className=" col-8 border border-warning-emphasis ms-4 shadow"> */}
                         <div className="d-flex justify-content-center mt-2">
                             <div className="col-6 m-1 p-0">
                                 <div className="d-flex justify-content-center">
@@ -64,23 +61,23 @@ function CurrentForcast(props) {
                                     <div><h4>{props.data? props.data.main.humidity: 0} %</h4></div>
                                     
                                 </div>
-                                <div className="text-center"><p>Humidity</p></div>
+                                <div className="text-center"><p className="fw-normal">Humidity</p></div>
                             </div>
                             <div className="col-6 m-1 p-0" > 
                                 <div className="d-flex justify-content-center"><div><AirIcon/></div><div><h4>{props.data? props.data.wind.speed: 0} mph</h4></div></div>
-                                <div className="text-center"><p>Wind Speed</p></div>
+                                <div className="text-center"><p className="fw-normal">Wind Speed</p></div>
                             </div>
                         </div>
 
                         <div className="d-flex justify-content-center">
                             <div className="col-6 m-1 p-0">
                                 <div className="text-center"><SpeedIcon/><h4>{props.data? props.data.main.pressure: 0} hPa</h4></div>
-                                <div className="text-center"><p>Pressure</p></div>
+                                <div className="text-center"><p className="fw-normal">Pressure</p></div>
                             </div>
                         
                             <div className="col-6 m-1 p-0"> 
                                 <div className="text-center"><VisibilityIcon/><h4>{props.data? props.data.visibility: 0} m</h4></div>
-                                <div className="text-center"><p>Visibility</p></div>
+                                <div className="text-center"><p className="fw-normal">Visibility</p></div>
                             </div>
                         </div>
                         
@@ -90,10 +87,9 @@ function CurrentForcast(props) {
                                     
                                     <h4>{props.data? props.data.clouds.all: 0} %</h4>
                                 </div>
-                                <div className="text-center"><p>Clouds Cover</p></div>
+                                <div className="text-center"><p className="fw-normal">Clouds Cover</p></div>
                             </div> 
                         
-                    {/* </div> */}
                 </div>
               
             

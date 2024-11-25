@@ -1,6 +1,5 @@
 // Imports dependencies
 import React, { useState } from 'react';
-import axios from 'axios';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import NightsStayIcon from '@mui/icons-material/NightsStay';
 import { IconButton } from '@mui/material';
@@ -37,14 +36,13 @@ const Header = (props) => {
                 </div>
                 <div className='d-flex justify-content-between'>
                     <div className='mx-2'>
-                        <form >
+                        <form onClick={handleSubmit}>
                             
                             <div className="input-group col">
                              
                                 <input 
                                     type="text" 
                                     className="form-control" 
-                                    // data-bs-theme='light'
                                     value={inputValue}  
                                     placeholder="Location Search"
                                     onChange={handleChange} 
@@ -52,7 +50,7 @@ const Header = (props) => {
                                     aria-describedby="basic-addon1" 
                                     required/>
                                 
-                                <button type="submit" onClick={handleSubmit} className="btn btn-primary"><i className="bi bi-search"></i></button>
+                                <button type="submit"  className="btn btn-primary"><i className="bi bi-search"></i></button>
                             </div>
                         
                                           

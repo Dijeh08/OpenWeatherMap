@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import Header from './components/Header'
-import './App.css';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react'; //import react module
+import Header from './components/Header' // Import Header component
+import './App.css'; //Import App stylesheet
+import axios from 'axios'; // Import Axios
 import CurrentForcast from './components/CurrentForcast';
 import HourlyForcast from './components/HourlyForcast';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import Footer from './components/footer';
+import { countryNames } from './components/countryData';
 
 function App() {
   
@@ -17,15 +18,13 @@ function App() {
   const [weather3HrsData, setWeather3HrsData] = useState([]);
   const controller = new AbortController();
   const signal = controller.signal;
-  // const [searchButtonClicked, setSearchButtonClicked] = useState(false);
   const htmlElement = document.querySelector('html');
                       htmlElement.setAttribute('data-bs-theme', darkMode? 'dark':'light');
   const openWeatherMap_key = import.meta.env.VITE_SECRET_KEY;
 
+ 
   function hangleModeClick(mode) {
-   
-    setDarkMode(mode)
-    // console.log(mode)
+    setDarkMode(mode);
   }
 
   function handleInputValue(state) {
@@ -41,25 +40,17 @@ function App() {
       
       const latitude = locationResponse.data[0].lat;
       const longitude = locationResponse.data[0].lon;
-      const state = locationResponse.data[0].state;
-      const country = locationResponse.data[0].country;
-      setState(state)
-      const result = await axios ({
-          
-                method: 'POST',
-                url: 'http://localhost:3001/filter',
-                data: ({
-                    country: country
-                })
-            });
-    // console.log(latitude, longitude, state, country, result.data);
-    setCountry(result.data);
+      const {state, country} = locationResponse.data[0];
+      setState(state);
+
+      const result = (countryNames.filter(particularCountry => particularCountry.Code === country))[0].Name;
+      
+    setCountry(result);
     const currentWeatherResponse = await axios ({
       method: 'GET',
       url: `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${openWeatherMap_key}`,
     }, {signal});
-  // console.log(latitude, longitude)
-  // console.log(currentWeatherResponse.data);
+  
   setWeatherData(currentWeatherResponse.data)
     
 
@@ -67,8 +58,6 @@ function App() {
       method: "GET",
       url: `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&appid=${openWeatherMap_key}`
     },{signal});
-
-  // console.log(forcast.data.list);
   
   setWeather3HrsData(forcast.data.list)
 } catch (error) {
@@ -77,13 +66,13 @@ function App() {
   }
 
   async function handleSearchButtonClicked(params) {
-    // setSearchButtonClicked(params)
+    
     console.log(params)
     APIcall();
   }
   
   function CreateWeatherCard(params) {
-    // console.log(params)
+   
     return(
       <HourlyForcast 
         data={params}/>
@@ -112,7 +101,9 @@ function App() {
         <div className='text-center bg-success p-2 mt-1'><h3>5 Day/ 3 HOUR FORCAST</h3></div>
         <div className='overflow-x-scroll d-flex'>
           {weather3HrsData.map(CreateWeatherCard)}
+          
         </div> 
+        
       </div>
       }
       <Footer/>
